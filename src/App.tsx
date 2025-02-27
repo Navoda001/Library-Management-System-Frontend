@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import  NavBar  from "./components/NavBar";
 
 function App() {
-  const name = "Navoda Chathurya"
   return (
     <div className="App">
-      Hello Mr.{name}
+      <NavBar/>
       
     </div>
   );
