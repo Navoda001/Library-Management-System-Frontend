@@ -1,68 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import { GetBooks } from '../service/GetBooks';
+import EditBook from './EditBook';
 
 export const BookConsole = () => {
-    interface Book{
-        bookId:String;
-        bookName:String;
-        author:String;
-        edition:String;
-        publisher:String;
-        isbn:String;
-        price:number;
-        totalQty:number;
-        availableQty:String;
-        lastUpdateDate:String;
-        lastUpdateTime:String;
+    interface Book {
+        bookId: String;
+        bookName: String;
+        author: String;
+        edition: String;
+        publisher: String;
+        isbn: String;
+        price: number;
+        totalQty: number;
+        availableQty: String;
+        lastUpdateDate: String;
+        lastUpdateTime: String;
     }
-    const [bookData , setBookData] = useState<Book[]>([])
+    const [bookData, setBookData] = useState<Book[]>([])
+    const [selectedRow, setSelectedRow] = useState<Book |null>(null)
 
     //add useEffect to load Table
-    useEffect(()=>{
-        const loadData = async () =>{
+    useEffect(() => {
+        const loadData = async () => {
             const bookDetails = await GetBooks()
             console.log(bookDetails)
             setBookData(bookDetails)
         }
         loadData();
-    },[])
-    const tHeads : String [] = [
-            "Book Id",
-            "Book Name",
-            "Author",
-            "Edition",
-            "Publisher",
-            "ISBN",
-            "Price",
-            "Total Qty",
-            "Available Qty",
-            "Last Update Date",
-            "Last Update Time"
+    }, [])
+    const tHeads: String[] = [
+        "Book Id",
+        "Book Name",
+        "Author",
+        "Edition",
+        "Publisher",
+        "ISBN",
+        "Price",
+        "Total Qty",
+        "Available Qty",
+        "Last Update Date",
+        "Last Update Time",
+        "Action"
     ];
+    //handle edit function
+    const handleEdit = (row : Book) =>{
+       console.log("handle Edit",row)
+       setSelectedRow(row)
+
+    }
 
     return (
         <>
+            <h1 className='text-center p-3 fw-bold fs-1' >Books</h1>
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
-                        {tHeads.map((headings) =>(
-                             <th>{headings}</th>
+                        {tHeads.map((headings) => (
+                            <th>{headings}</th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
                     {bookData.map((row) => (
                         <tr>
-                           {Object.values(row).map((cell,index)=>(
+                            {Object.values(row).map((cell, index) => (
+                                <td>
+                                    {cell}
+                                </td>
+                            ))}
                             <td>
-                                {cell}
+                                <div className='d-flex gap-2'>
+                                    <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
+                                    <Button variant="outline-danger">Delete</Button>
+                                </div>
                             </td>
-                           ))}
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            </>
-            );
+            <EditBook/>
+        </>
+    );
 };
