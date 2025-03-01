@@ -7,17 +7,15 @@ import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../../service/BookDa
 
 export const BookConsole = () => {
     interface Book {
-        bookId: String;
-        bookName: String;
-        author: String;
-        edition: String;
-        publisher: String;
-        isbn: String;
+        bookId: string;
+        bookName: string;
+        author: string;
+        edition: string;
+        publisher: string;
+        isbn: string;
         price: number;
         totalQty: number;
         availableQty: number;
-        lastUpdateDate: String;
-        lastUpdateTime: String;
     }
 
     const [bookData, setBookData] = useState<Book[]>([])
@@ -76,6 +74,7 @@ export const BookConsole = () => {
     const handleAdd = (newBook :Book) => {
             setBookData((prevData) => [...prevData,newBook])
     }
+    
     return (
         <>
         <div className='d-flex justify-content-end p-3'>

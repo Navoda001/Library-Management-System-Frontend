@@ -2,24 +2,16 @@ import { Modal, Button, Form, FloatingLabel } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
 interface Book {
-  bookId: String;
-  bookName: String;
-  author: String;
-  edition: String;
-  publisher: String;
-  isbn: String;
+  bookId: string;
+  bookName: string;
+  author: string;
+  edition: string;
+  publisher: string;
+  isbn: string;
   price: number;
   totalQty: number;
   availableQty: number;
 }
-
-// interface BookEditProps {
-//   show: boolean;
-//   selectedRow: Book | null;
-//   handleClose: () => void;
-//   handleUpdate: (updatedBook: Book) => void;
-// }
-
 
 function AddBook({ show, handleOnClose, handleAdd,addBook }: any) {
 
@@ -52,6 +44,16 @@ function AddBook({ show, handleOnClose, handleAdd,addBook }: any) {
     }        
 }
 
+const createFormElement = (label:string, name:keyof Book, type="text") =>(
+  <FloatingLabel controlId="floatingInput" label={label}className="mb-3">
+    <Form.Control 
+      type={type}
+      name={name}
+      value={newBook[name]}
+      onChange={handleOnChange}
+    />
+  </FloatingLabel>
+ );
   return (
     <>
       <Modal show={show} onHide={handleOnClose}>
@@ -61,79 +63,14 @@ function AddBook({ show, handleOnClose, handleAdd,addBook }: any) {
         <Modal.Body>
           {/* Form */}
           <Form>
-
-            <FloatingLabel controlId="floatingInput" label="Title" className="mb-3">
-              <Form.Control
-                type="text"
-                name="bookName"
-                value={newBook.bookName?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Author" className="mb-3">
-              <Form.Control
-                type="text"
-                name="author"
-                value={newBook.author?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Edition" className="mb-3">
-              <Form.Control
-                type="text"
-                name="edition"
-                value={newBook.edition?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Publisher" className="mb-3">
-              <Form.Control
-                type="text"
-                name="publisher"
-                value={newBook.publisher?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="ISBN" className="mb-3">
-              <Form.Control
-                type="text"
-                name="isbn"
-                value={newBook.isbn?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Price" className="mb-3">
-              <Form.Control
-                type="number"
-                name="price"
-                value={newBook.price}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Total Qty" className="mb-3">
-              <Form.Control
-                type="number"
-                name="totalQty"
-                value={newBook.totalQty}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Avl Qty" className="mb-3">
-              <Form.Control
-                type="number"
-                name="availableQty"
-                value={newBook.availableQty}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
+          {createFormElement("Title","bookName","text")}
+          {createFormElement("Author","author","text")}
+          {createFormElement("Edition","edition","text")}
+          {createFormElement("Publisher","publisher","text")}
+          {createFormElement("ISBN","isbn","text")}
+          {createFormElement("Price","price","number")}
+          {createFormElement("Total Qty","totalQty","number")}
+          {createFormElement("Avl Qty","availableQty","number")}
           </Form>
 
         </Modal.Body>
