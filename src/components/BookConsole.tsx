@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import { GetBooks } from '../service/GetBooks';
+import { GetBooks } from '../service/Books/GetBooks';
 import EditBook from './EditBook';
 
 export const BookConsole = () => {
@@ -14,12 +14,14 @@ export const BookConsole = () => {
         isbn: String;
         price: number;
         totalQty: number;
-        availableQty: String;
+        availableQty: number ;
         lastUpdateDate: String;
         lastUpdateTime: String;
     }
+
     const [bookData, setBookData] = useState<Book[]>([])
-    const [selectedRow, setSelectedRow] = useState<Book |null>(null)
+    const [selectedRow, setSelectedRow] = useState<Book | null>(null)
+    const [showEditBookForm, setShowEditBookForm] = useState(false)
 
     //add useEffect to load Table
     useEffect(() => {
@@ -45,10 +47,14 @@ export const BookConsole = () => {
         "Action"
     ];
     //handle edit function
-    const handleEdit = (row : Book) =>{
-       console.log("handle Edit",row)
-       setSelectedRow(row)
-
+    const handleEdit = (row: Book) => {
+        console.log("handle Edit", row)
+        setSelectedRow(row)
+        setShowEditBookForm(true)
+    }
+    const handleClose = () => setShowEditBookForm(false);
+    const handleUpdate = (updatedBook: Book) => {
+        console.log("update Book",updatedBook)
     }
 
     return (
@@ -80,7 +86,12 @@ export const BookConsole = () => {
                     ))}
                 </tbody>
             </Table>
-            <EditBook/>
+            <EditBook
+                show={showEditBookForm}
+                selectedRow={selectedRow}
+                handleClose={handleClose}
+                handleUpdate={handleUpdate}
+            />
         </>
     );
 };
