@@ -1,6 +1,5 @@
 import { Modal, Button, Form, FloatingLabel } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../service/BookData';
 
 
 interface Book {
@@ -22,10 +21,11 @@ interface BookEditProps {
   selectedRow: Book | null;
   handleClose: () => void;
   handleUpdate: (updatedBook: Book) => void;
+  updateBook:(book : Book) => Promise<void>;
 }
 
 
-function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProps) {
+function EditBook({ show, selectedRow, handleClose, handleUpdate, updateBook }: BookEditProps) {
 
   const [book, setBook] = useState<Book>({
     bookId: "",
@@ -53,8 +53,8 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
   }
   const handleSave = async () =>{
     try{
-     const updatedBook = await UpdateBook(book);
-     handleUpdate(updatedBook)
+    await updateBook(book);
+     handleUpdate(book)
      handleClose()
     }catch(err){
         console.error("Failed to update the book",err)

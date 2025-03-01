@@ -101,7 +101,7 @@ export const BookConsole = () => {
                             <td>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
-                                    <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>Delete</Button>
+                                    <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>ssss</Button>
                                 </div>
                             </td>
                         </tr>
@@ -113,12 +113,13 @@ export const BookConsole = () => {
                 selectedRow={selectedRow}
                 handleClose={handleClose}
                 handleUpdate={handleUpdate}
+                updateBook = {UpdateBook}
             />
             <AddBook
             show = {showAddBookForm}
             handleOnClose={() => setShowAddForm(false)} //pass the function as prop
             handleAdd = {handleAdd}
-            
+            addBook = {AddBookData}
             />
         </>
     );

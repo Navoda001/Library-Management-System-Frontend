@@ -1,7 +1,5 @@
 import { Modal, Button, Form, FloatingLabel } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../service/BookData';
-
 
 interface Book {
   bookId: String;
@@ -23,7 +21,7 @@ interface Book {
 // }
 
 
-function AddBook({ show, handleOnClose, handleAdd }: any) {
+function AddBook({ show, handleOnClose, handleAdd,addBook }: any) {
 
   const [newBook, setNewBook] = useState<Book>({
     bookId: "",
@@ -46,7 +44,7 @@ function AddBook({ show, handleOnClose, handleAdd }: any) {
   //add new book
   const handleOnSubmit = async () =>{
     try{
-     const newBookDetails = await AddBookData(newBook);
+     const newBookDetails = await addBook(newBook);
      handleAdd(newBookDetails)
      handleOnClose()
     }catch(err){
