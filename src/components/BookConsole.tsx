@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { GetBooks } from '../service/Books/GetBooks';
 import EditBook from './EditBook';
+import { DeleteBook } from '../service/Books/DeleteBook';
 
 export const BookConsole = () => {
     interface Book {
@@ -14,7 +15,7 @@ export const BookConsole = () => {
         isbn: String;
         price: number;
         totalQty: number;
-        availableQty: number ;
+        availableQty: number;
         lastUpdateDate: String;
         lastUpdateTime: String;
     }
@@ -54,9 +55,23 @@ export const BookConsole = () => {
     }
     const handleClose = () => setShowEditBookForm(false);
     const handleUpdate = (updatedBook: Book) => {
-        console.log("update Book",updatedBook)
+        const updatedBooks = bookData.map((book) =>
+            book.bookId === updatedBook.bookId ? updatedBook : book
+        );
+        setBookData(updatedBooks)
     }
+    //handle delete
+    const handleDelete = async (bookId: String) => {
+        console.log(bookId)
+        try {
+            await DeleteBook(bookId)
+           setBookData(bookData.filter((book)=> book.bookId !== bookId))
+           
+        } catch (err) {
+            console.error("Delete book failed with ", err)
+        }
 
+    }
     return (
         <>
             <h1 className='text-center p-3 fw-bold fs-1' >Books</h1>
@@ -79,7 +94,7 @@ export const BookConsole = () => {
                             <td>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
-                                    <Button variant="outline-danger">Delete</Button>
+                                    <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>Delete</Button>
                                 </div>
                             </td>
                         </tr>
