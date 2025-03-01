@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import EditBook from './EditBook';
 import AddBook from './AddBook';
-import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../service/BookData';
+import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../../service/BookData';
 
 export const BookConsole = () => {
     interface Book {
