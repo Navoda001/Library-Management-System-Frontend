@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import { GetBooks } from '../service/Books/GetBooks';
 import EditBook from './EditBook';
-import { DeleteBook } from '../service/Books/DeleteBook';
+import AddBook from './AddBook';
+import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../service/BookData';
 
 export const BookConsole = () => {
     interface Book {
@@ -23,7 +23,7 @@ export const BookConsole = () => {
     const [bookData, setBookData] = useState<Book[]>([])
     const [selectedRow, setSelectedRow] = useState<Book | null>(null)
     const [showEditBookForm, setShowEditBookForm] = useState(false)
-
+    const [showAddBookForm,setShowAddForm] = useState(false)
     //add useEffect to load Table
     useEffect(() => {
         const loadData = async () => {
@@ -72,9 +72,16 @@ export const BookConsole = () => {
         }
 
     }
+
+    const handleAdd = (newBook :Book) => {
+            setBookData((prevData) => [...prevData,newBook])
+    }
     return (
         <>
-            <h1 className='text-center p-3 fw-bold fs-1' >Books</h1>
+        <div className='d-flex justify-content-end p-3'>
+        <Button variant="outline-primary" onClick={() => setShowAddForm(true)}>Add Books</Button>
+        </div>
+            <h1 className='text-center p-3 fw-bold fs-1' >Book Console</h1>
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
@@ -106,6 +113,12 @@ export const BookConsole = () => {
                 selectedRow={selectedRow}
                 handleClose={handleClose}
                 handleUpdate={handleUpdate}
+            />
+            <AddBook
+            show = {showAddBookForm}
+            handleOnClose={() => setShowAddForm(false)} //pass the function as prop
+            handleAdd = {handleAdd}
+            
             />
         </>
     );

@@ -13,21 +13,19 @@ interface Book {
   price: number;
   totalQty: number;
   availableQty: number;
-  lastUpdateDate: String;
-  lastUpdateTime: String;
 }
 
-interface BookEditProps {
-  show: boolean;
-  selectedRow: Book | null;
-  handleClose: () => void;
-  handleUpdate: (updatedBook: Book) => void;
-}
+// interface BookEditProps {
+//   show: boolean;
+//   selectedRow: Book | null;
+//   handleClose: () => void;
+//   handleUpdate: (updatedBook: Book) => void;
+// }
 
 
-function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProps) {
+function AddBook({ show, handleOnClose, handleAdd }: any) {
 
-  const [book, setBook] = useState<Book>({
+  const [newBook, setNewBook] = useState<Book>({
     bookId: "",
     bookName: "",
     author: "",
@@ -36,26 +34,21 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
     isbn: "",
     price: 0,
     totalQty: 0,
-    availableQty: 0,
-    lastUpdateDate: "",
-    lastUpdateTime: ""
+    availableQty: 0
   });
-
-  useEffect(() => {
-    if (selectedRow) {
-      setBook({ ...selectedRow })
-    }
-  }, [selectedRow])
 
   //add book data from the form
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBook({ ...book, [e.target.name]: e.target.value })
+    const {name ,value} = e.target;
+    setNewBook((prev)=> ({...prev,[name]:value}))
   }
-  const handleSave = async () =>{
+
+  //add new book
+  const handleOnSubmit = async () =>{
     try{
-     const updatedBook = await UpdateBook(book);
-     handleUpdate(updatedBook)
-     handleClose()
+     const newBookDetails = await AddBookData(newBook);
+     handleAdd(newBookDetails)
+     handleOnClose()
     }catch(err){
         console.error("Failed to update the book",err)
     }        
@@ -63,7 +56,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleOnClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Book</Modal.Title>
         </Modal.Header>
@@ -71,21 +64,11 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
           {/* Form */}
           <Form>
 
-            <FloatingLabel controlId="floatingInput" label="Book Id" className="mb-3">
-              <Form.Control
-                readOnly
-                type="text"
-                name="bookId"
-                value={book.bookId?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
             <FloatingLabel controlId="floatingInput" label="Title" className="mb-3">
               <Form.Control
                 type="text"
                 name="bookName"
-                value={book.bookName?.toString()}
+                value={newBook.bookName?.toString()}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -94,7 +77,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="text"
                 name="author"
-                value={book.author?.toString()}
+                value={newBook.author?.toString()}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -103,7 +86,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="text"
                 name="edition"
-                value={book.edition?.toString()}
+                value={newBook.edition?.toString()}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -112,7 +95,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="text"
                 name="publisher"
-                value={book.publisher?.toString()}
+                value={newBook.publisher?.toString()}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -121,7 +104,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="text"
                 name="isbn"
-                value={book.isbn?.toString()}
+                value={newBook.isbn?.toString()}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -130,7 +113,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="number"
                 name="price"
-                value={book.price}
+                value={newBook.price}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -139,7 +122,7 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="number"
                 name="totalQty"
-                value={book.totalQty}
+                value={newBook.totalQty}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
@@ -148,39 +131,20 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
               <Form.Control
                 type="number"
                 name="availableQty"
-                value={book.availableQty}
+                value={newBook.availableQty}
                 onChange={handleOnChange}
               />
             </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Last Updated Date" className="mb-3">
-              <Form.Control
-                type="text"
-                name="lastUpdateDate"
-                value={book.lastUpdateDate?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel controlId="floatingInput" label="Last Updated time" className="mb-3">
-              <Form.Control
-                type="text"
-                name="lastUpdateTime"
-                value={book.lastUpdateTime?.toString()}
-                onChange={handleOnChange}
-              />
-            </FloatingLabel>
-
 
           </Form>
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleOnClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Update
+          <Button variant="primary" onClick={handleOnSubmit}>
+            Add
           </Button>
         </Modal.Footer>
       </Modal>
@@ -188,4 +152,4 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
   );
 }
 
-export default EditBook;
+export default AddBook;
