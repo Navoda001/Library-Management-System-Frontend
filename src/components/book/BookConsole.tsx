@@ -100,7 +100,7 @@ export const BookConsole = () => {
                             <td>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
-                                    <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>ssss</Button>
+                                    <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>Delete</Button>
                                 </div>
                             </td>
                         </tr>

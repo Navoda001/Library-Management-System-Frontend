@@ -58,12 +58,12 @@ const createFormElement = (label:string, name:keyof Book, type="text") =>(
     <>
       <Modal show={show} onHide={handleOnClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Book</Modal.Title>
+          <Modal.Title>Add Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* Form */}
           <Form>
-          {createFormElement("Title","bookName","text")}
+          {createFormElement("Book Name","bookName","text")}
           {createFormElement("Author","author","text")}
           {createFormElement("Edition","edition","text")}
           {createFormElement("Publisher","publisher","text")}
