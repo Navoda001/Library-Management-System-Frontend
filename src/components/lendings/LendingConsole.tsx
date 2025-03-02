@@ -2,6 +2,6 @@ import React from 'react';
 
 export const LendingConsole = () => {
     return (
-        <div>LendingConsole</div>
+        <h1>LendingConsole</h1>
     );
 };

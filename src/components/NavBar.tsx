@@ -1,7 +1,8 @@
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { NavLink } from "react-router";
 
 function CollapsibleExample() {
   return (
@@ -15,10 +16,10 @@ function CollapsibleExample() {
           </Nav>
           <Nav>
           <Nav className="me-auto">
-            <Nav.Link href="#book">Book</Nav.Link>
-            <Nav.Link href="#staff">Staff</Nav.Link>
-            <Nav.Link href="#members">Members</Nav.Link>
-            <Nav.Link href="#lending">Lendings</Nav.Link>
+            <Nav.Link as={NavLink} to="/book">Book</Nav.Link>
+            <Nav.Link as={NavLink} to="/lending">Lendings</Nav.Link>
+            <Nav.Link as={NavLink} to="/staff">Staff</Nav.Link>
+            <Nav.Link as={NavLink} to="/member">Members</Nav.Link>
           </Nav>
           </Nav>
         </Navbar.Collapse>
