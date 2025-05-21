@@ -1,6 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from "react"
+import { SignUpTask } from "../../service/Auth"
 
 export const SignUp = () => {
     interface SignUp {
@@ -10,6 +11,7 @@ export const SignUp = () => {
         password: string,
         role: string,
     }
+
 
     const [user, setUser] = useState<SignUp>({
         firstName: "",
@@ -22,10 +24,10 @@ export const SignUp = () => {
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     }
-    const handleOnSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const handleOnSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //API  request
-        console.log(user)
+        const token = await SignUpTask(user)
+        console.log(token)
         setUser({
             firstName: "",
             lastName: "",
@@ -33,7 +35,10 @@ export const SignUp = () => {
             password: "",
             role: ""
         })
+
+
     }
+
     return (
         <>
             <h1>Sign up</h1>
@@ -48,6 +53,7 @@ export const SignUp = () => {
                             name="firstName"
                             value={user.firstName}
                             onChange={handleOnChange}
+
                         />
                     </Form.Group>
 
@@ -60,6 +66,7 @@ export const SignUp = () => {
                             name="lastName"
                             value={user.lastName}
                             onChange={handleOnChange}
+
                         />
                     </Form.Group>
 
@@ -72,6 +79,7 @@ export const SignUp = () => {
                             name="email"
                             value={user.email}
                             onChange={handleOnChange}
+
                         />
                     </Form.Group>
 
@@ -84,12 +92,14 @@ export const SignUp = () => {
                             name="password"
                             value={user.password}
                             onChange={handleOnChange}
+
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Role</Form.Label>
                         <Form.Select name="role" value={user.role} onChange={handleOnChange}>
+                            <option value="">Select a role</option>
                             <option value="ADMIN">ADMIN</option>
                             <option value="OFFICER">OFFICER</option>
                             <option value="LIBRARIAN">LIBRARIAN</option>
