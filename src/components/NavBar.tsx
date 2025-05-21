@@ -16,6 +16,8 @@ function CollapsibleExample() {
           </Nav>
           <Nav>
           <Nav className="me-auto">
+            <Nav.Link as ={NavLink} to="/signin">SignIn</Nav.Link>
+            <Nav.Link as ={NavLink} to="/signup">SignUp</Nav.Link>
             <Nav.Link as={NavLink} to="/book">Book</Nav.Link>
             <Nav.Link as={NavLink} to="/member">Members</Nav.Link>
             <Nav.Link as={NavLink} to="/lending">Lendings</Nav.Link>
