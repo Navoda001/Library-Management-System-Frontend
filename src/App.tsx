@@ -11,6 +11,7 @@ import NotFound from './components/NotFound';
 import { SignUp } from './components/auth/Signup';
 import { SignIn } from './components/auth/SignIn';
 import { AuthProvider } from './components/auth/AuthProvider';
+import { UnAuth } from './components/auth/UnAuth';
 
 function App() {
   return (
@@ -19,14 +20,15 @@ function App() {
       <AuthProvider>
         <NavBar />
         <Routes>
+           <Route path="/" element = {<SignIn/>}/>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<BookConsole />} />
           <Route path="/book" element={<BookConsole />} />
           <Route path="/member" element={<MemberConsole />} />
           <Route path="/staff" element={<StaffMemberConsole />} />
           <Route path="/lending" element={<LendingConsole />} />
           <Route path="/*" element={<NotFound />} />
+          <Route path= "/unauth" element = {<UnAuth/>}/>
         </Routes>
         </AuthProvider>
       </BrowserRouter>
