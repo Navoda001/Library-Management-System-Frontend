@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { useState } from "react"
 import { SignUpTask } from "../../service/Auth"
 import { useAuth } from "./AuthProvider"
+import { useNavigate } from 'react-router';
 
 export const SignUp = () => {
     interface SignUp {
@@ -27,6 +28,7 @@ export const SignUp = () => {
     }
 
     const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleOnSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -40,6 +42,8 @@ export const SignUp = () => {
             password: "",
             role: ""
         })
+        //navigate to /book
+        navigate("/book")
 
 
     }

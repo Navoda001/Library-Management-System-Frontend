@@ -5,6 +5,9 @@ import EditBook from './EditBook';
 import AddBook from './AddBook';
 import { AddBookData, DeleteBook, GetBooks, UpdateBook } from '../../service/BookData';
 import styles from "./bookstyle.module.css"
+import { useNavigate } from 'react-router'
+import { UnAuth } from '../auth/UnAuth';
+import Swal from "sweetalert2";
 
 export const BookConsole = () => {
     interface Book {
@@ -18,7 +21,7 @@ export const BookConsole = () => {
         totalQty: number;
         availableQty: number;
     }
-
+    const navigate = useNavigate();
     const [bookData, setBookData] = useState<Book[]>([])
     const [selectedRow, setSelectedRow] = useState<Book | null>(null)
     const [showEditBookForm, setShowEditBookForm] = useState(false)
@@ -39,6 +42,7 @@ export const BookConsole = () => {
             const books = await GetBooks();
             setBookData(books);
         } catch (error) {
+             navigate("/unauth")
             console.error("Error fetching books:", error);
         }
     };
@@ -70,17 +74,28 @@ export const BookConsole = () => {
         setBookData(updatedBooks)
     }
     //handle delete
-    const handleDelete = async (bookId: String) => {
-        console.log(bookId)
-        try {
-            await DeleteBook(bookId)
-            setBookData(bookData.filter((book) => book.bookId !== bookId))
-
-        } catch (err) {
-            console.error("Delete book failed with ", err)
-        }
-
-    }
+    const handleDelete = async (bookId:string) =>{
+     //impl custom alerts
+     const result = await Swal.fire({
+       title:"Are you sure to delete this record?",
+       text:"The process cannot be undone",
+       icon:"warning",
+       showCancelButton: true,
+       confirmButtonColor: "#d33",
+       cancelButtonColor: "#3085d6",
+       confirmButtonText: "Yes, delete it!",
+       cancelButtonText: "Cancel",
+       allowOutsideClick: false,
+     });
+     if(result.isConfirmed){
+      try{
+        await DeleteBook(bookId)
+        setBookData(bookData.filter((book)=> book.bookId !== bookId)) 
+      }catch(err){
+        console.error("Delete book failed with ",err)
+      } 
+     }
+   }
 
     const handleAdd = (newBook: Book) => {
         setBookData((prevData) => [...prevData, newBook])
