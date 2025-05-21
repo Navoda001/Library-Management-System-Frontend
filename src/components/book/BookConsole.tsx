@@ -42,7 +42,7 @@ export const BookConsole = () => {
             const books = await GetBooks();
             setBookData(books);
         } catch (error) {
-             navigate("/unauth")
+            navigate("/unauth")
             console.error("Error fetching books:", error);
         }
     };
@@ -66,36 +66,43 @@ export const BookConsole = () => {
         setSelectedRow(row)
         setShowEditBookForm(true)
     }
-    const handleClose = () => setShowEditBookForm(false);
-    const handleUpdate = (updatedBook: Book) => {
+    const handleClose =  () => setShowEditBookForm(false);
+    const handleUpdate = async (updatedBook: Book) => {
         const updatedBooks = bookData.map((book) =>
             book.bookId === updatedBook.bookId ? updatedBook : book
         );
         setBookData(updatedBooks)
+
+        await Swal.fire({
+            title: "Success!",
+            text: "Book details updated successfully",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
     }
     //handle delete
-    const handleDelete = async (bookId:string) =>{
-     //impl custom alerts
-     const result = await Swal.fire({
-       title:"Are you sure to delete this record?",
-       text:"The process cannot be undone",
-       icon:"warning",
-       showCancelButton: true,
-       confirmButtonColor: "#d33",
-       cancelButtonColor: "#3085d6",
-       confirmButtonText: "Yes, delete it!",
-       cancelButtonText: "Cancel",
-       allowOutsideClick: false,
-     });
-     if(result.isConfirmed){
-      try{
-        await DeleteBook(bookId)
-        setBookData(bookData.filter((book)=> book.bookId !== bookId)) 
-      }catch(err){
-        console.error("Delete book failed with ",err)
-      } 
-     }
-   }
+    const handleDelete = async (bookId: string) => {
+        //impl custom alerts
+        const result = await Swal.fire({
+            title: "Are you sure to delete this record?",
+            text: "The process cannot be undone",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            allowOutsideClick: false,
+        });
+        if (result.isConfirmed) {
+            try {
+                await DeleteBook(bookId)
+                setBookData(bookData.filter((book) => book.bookId !== bookId))
+            } catch (err) {
+                console.error("Delete book failed with ", err)
+            }
+        }
+    }
 
     const handleAdd = (newBook: Book) => {
         setBookData((prevData) => [...prevData, newBook])
