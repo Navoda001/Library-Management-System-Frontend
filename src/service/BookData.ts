@@ -55,8 +55,7 @@ const DeleteBook = async (bookId: String) => {
 const GetBooks = async () => {
   //get the books
   try {
-    const response = await axios.get(`${baseURL}/getAllbooks`,
-      {
+    const response = await axios.get(`${baseURL}/getAllbooks`,{
         headers: {
           Authorization: fetchToken()
         }
