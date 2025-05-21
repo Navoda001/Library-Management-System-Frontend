@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import EditBook from './EditBook';
 import AddBook from './AddBook';
-import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../../service/BookData';
+import { AddBookData, DeleteBook, GetBooks, UpdateBook } from '../../service/BookData';
 import styles from "./bookstyle.module.css"
 
 export const BookConsole = () => {
@@ -22,16 +22,26 @@ export const BookConsole = () => {
     const [bookData, setBookData] = useState<Book[]>([])
     const [selectedRow, setSelectedRow] = useState<Book | null>(null)
     const [showEditBookForm, setShowEditBookForm] = useState(false)
-    const [showAddBookForm,setShowAddForm] = useState(false)
-    //add useEffect to load Table
+    const [showAddBookForm, setShowAddForm] = useState(false)
+    //add useEffect to load table data
     useEffect(() => {
-        const loadData = async () => {
-            const bookDetails = await GetBooks()
-            console.log(bookDetails)
-            setBookData(bookDetails)
-        }
-        loadData();
+        //  const laodData = async () =>{
+        //     const bookDetails = await GetBooks()
+        //     console.log(bookDetails)
+        //     setBookData(bookDetails)
+        //  };
+        //  laodData();
+        fetchBooks();
     }, [])
+
+    const fetchBooks = async () => {
+        try {
+            const books = await GetBooks();
+            setBookData(books);
+        } catch (error) {
+            console.error("Error fetching books:", error);
+        }
+    };
     const tHeads: String[] = [
         "Book Id",
         "Book Name",
@@ -64,23 +74,23 @@ export const BookConsole = () => {
         console.log(bookId)
         try {
             await DeleteBook(bookId)
-           setBookData(bookData.filter((book)=> book.bookId !== bookId))
-           
+            setBookData(bookData.filter((book) => book.bookId !== bookId))
+
         } catch (err) {
             console.error("Delete book failed with ", err)
         }
 
     }
 
-    const handleAdd = (newBook :Book) => {
-            setBookData((prevData) => [...prevData,newBook])
+    const handleAdd = (newBook: Book) => {
+        setBookData((prevData) => [...prevData, newBook])
     }
-    
+
     return (
         <>
-        <div className='d-flex justify-content-end p-3'>
-        <Button variant="outline-primary" onClick={() => setShowAddForm(true)}>Add Books</Button>
-        </div>
+            <div className='d-flex justify-content-end p-3'>
+                <Button variant="outline-primary" onClick={() => setShowAddForm(true)}>Add Books</Button>
+            </div>
             <h1 className={styles.bookTitle} >Book Console</h1>
             <Table striped bordered hover variant="dark">
                 <thead>
@@ -113,13 +123,13 @@ export const BookConsole = () => {
                 selectedRow={selectedRow}
                 handleClose={handleClose}
                 handleUpdate={handleUpdate}
-                updateBook = {UpdateBook}
+                updateBook={UpdateBook}
             />
             <AddBook
-            show = {showAddBookForm}
-            handleOnClose={() => setShowAddForm(false)} //pass the function as prop
-            handleAdd = {handleAdd}
-            addBook = {AddBookData}
+                show={showAddBookForm}
+                handleOnClose={() => setShowAddForm(false)} //pass the function as prop
+                handleAdd={handleAdd}
+                addBook={AddBookData}
             />
         </>
     );
