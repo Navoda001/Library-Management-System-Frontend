@@ -10,11 +10,13 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import NotFound from './components/NotFound';
 import { SignUp } from './components/auth/Signup';
 import { SignIn } from './components/auth/SignIn';
+import { AuthProvider } from './components/auth/AuthProvider';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <AuthProvider>
         <NavBar />
         <Routes>
           <Route path="/signin" element={<SignIn />} />
@@ -26,6 +28,7 @@ function App() {
           <Route path="/lending" element={<LendingConsole />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
 
     </div>
