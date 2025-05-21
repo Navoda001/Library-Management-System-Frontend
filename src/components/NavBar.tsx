@@ -12,14 +12,14 @@ function CollapsibleExample() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          <Navbar.Brand href="#home">LibMgmt - 2025</Navbar.Brand>
+          <Navbar.Brand as={NavLink} to="/book">LibMgmt - 2025</Navbar.Brand>
           </Nav>
           <Nav>
           <Nav className="me-auto">
             <Nav.Link as={NavLink} to="/book">Book</Nav.Link>
+            <Nav.Link as={NavLink} to="/member">Members</Nav.Link>
             <Nav.Link as={NavLink} to="/lending">Lendings</Nav.Link>
             <Nav.Link as={NavLink} to="/staff">Staff</Nav.Link>
-            <Nav.Link as={NavLink} to="/member">Members</Nav.Link>
           </Nav>
           </Nav>
         </Navbar.Collapse>

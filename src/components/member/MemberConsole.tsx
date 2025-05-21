@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import EditMember from './EditMember';
 import AddMember from './AddMember';
 import { AddMemberData, UpdateMember, DeleteMember, GetMembers } from '../../service/MemberData';
+import style from "./memberstyle.module.css"
 
 export const MemberConsole = () => {
     interface Member {
@@ -67,7 +68,7 @@ export const MemberConsole = () => {
         <div className='d-flex justify-content-end p-3'>
         <Button variant="outline-primary" onClick={() => setShowAddForm(true)}>Add Member</Button>
         </div>
-            <h1 className='text-center p-3 fw-bold fs-1' >Member Console</h1>
+            <h1 className={style.memberTitle} >Member Console</h1>
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>

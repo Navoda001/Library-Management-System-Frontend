@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import EditMember from './EditStaffMember';
 import AddMember from './AddStaffMember';
 import { AddStaffData, UpdateStaff, DeleteStaff, GetStaff } from '../../service/StaffData';
+import { useLocation } from 'react-router';
+import styles from "./staffstyle.module.css"
 
 export const StaffMemberConsole = () => {
     interface Staff {
@@ -70,13 +72,19 @@ export const StaffMemberConsole = () => {
     const handleAdd = (newStaff :Staff) => {
             setStaffData((prevData) => [...prevData,newStaff])
     }
-    
+
+    //   get location of current route
+//    const location = useLocation();
+//    const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
+//    const formattedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + " Console";
+
     return (
         <>
         <div className='d-flex justify-content-end p-3'>
         <Button variant="outline-primary" onClick={() => setShowAddForm(true)}>Add Staff Member</Button>
         </div>
-            <h1 className='text-center p-3 fw-bold fs-1' >Staff Member Console</h1>
+        {/* <h1>{formattedTitle}</h1> */}
+            <h1 className={styles.staffTitle} >Staff Member Console</h1>
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>

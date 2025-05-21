@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import EditBook from './EditBook';
 import AddBook from './AddBook';
 import { AddBookData,DeleteBook,GetBooks,UpdateBook } from '../../service/BookData';
+import styles from "./bookstyle.module.css"
 
 export const BookConsole = () => {
     interface Book {
@@ -80,7 +81,7 @@ export const BookConsole = () => {
         <div className='d-flex justify-content-end p-3'>
         <Button variant="outline-primary" onClick={() => setShowAddForm(true)}>Add Books</Button>
         </div>
-            <h1 className='text-center p-3 fw-bold fs-1' >Book Console</h1>
+            <h1 className={styles.bookTitle} >Book Console</h1>
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
