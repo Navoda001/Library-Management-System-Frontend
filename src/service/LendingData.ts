@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = "http://localhost:8082/booklib/api/v1/lendings"
+const baseURL = "http://localhost:3700/booklib/api/v1/lending"
 
 const fetchToken = () => {
   const token = localStorage.getItem("libToken")
@@ -34,7 +34,7 @@ const DeleteLending = async (lendingId: String) => {
   try {
     console.log(lendingId)
     const response = await axios.delete(
-      `${baseURL}?lendingId=${lendingId}`, {
+      `${baseURL}/${lendingId}`, {
       headers: {
         Authorization: fetchToken()
       }
@@ -53,7 +53,7 @@ const DeleteLending = async (lendingId: String) => {
 const GetLendings = async () => {
   //get the lendings
   try {
-    const response = await axios.get(`${baseURL}/getAllLendings`,{
+    const response = await axios.get(`${baseURL}`,{
       headers: {
         Authorization: fetchToken()
       }
@@ -70,7 +70,7 @@ const UpdateLending = async (lending: any) => {
   //  get the lendings
   try {
     const response = await axios.patch(
-      `${baseURL}?lendingId=${lending.lendingId}`,
+      `${baseURL}/${lending.lendingId}`,
       lending, {
       headers: {
         Authorization: fetchToken()

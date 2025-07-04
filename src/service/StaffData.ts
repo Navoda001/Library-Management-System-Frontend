@@ -34,7 +34,7 @@ const DeleteStaff = async (staffId: String) => {
   try {
     console.log(staffId)
     const response = await axios.delete(
-      `${baseURL}?staffId=${staffId}`, {
+      `${baseURL}/${staffId}`, {
       headers: {
         Authorization: fetchToken()
       }
@@ -52,7 +52,7 @@ const DeleteStaff = async (staffId: String) => {
 const GetStaff = async () => {
   //get the staff
   try {
-    const response = await axios.get(`${baseURL}/getAllStaff`, {
+    const response = await axios.get(`${baseURL}`, {
       headers: {
         Authorization: fetchToken()
       }
@@ -68,7 +68,7 @@ const UpdateStaff = async (staff: any) => {
   //  get the books
   try {
     const response = await axios.patch(
-      `${baseURL}?staffId=${staff.staffId}`,
+      `${baseURL}/${staff.staffId}`,
       staff,
       {
         headers: {
